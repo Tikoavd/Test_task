@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="items_title">Items per category</string>
+    <string name="characters_title">Top 3 characters in all titles</string>
+    <string name="item_count_format">%d items</string>
+</resources>

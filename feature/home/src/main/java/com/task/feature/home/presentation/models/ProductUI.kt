@@ -1,9 +1,7 @@
 package com.task.feature.home.presentation.models
 
-import androidx.compose.runtime.Immutable
 import com.task.feature.home.domain.models.Product
 
-@Immutable
 data class ProductUI(
     val id: Int,
     val categoryId: Int,

@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -38,7 +37,7 @@ android {
         }
     }
     buildFeatures {
-        compose = true
+        viewBinding = true
     }
 }
 
@@ -46,16 +45,12 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:presentation"))
-    implementation(project(":screens"))
 
-    implementation(libs.coil.compose)
+    implementation(libs.glide)
 
     implementation(libs.bundles.androidx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
-    implementation(libs.material)
-    implementation(libs.compose.material.icon)
+    implementation(libs.bundles.ui)
+    implementation(libs.navigation.fragment)
 
     implementation(libs.bundles.koin)
     ksp(libs.koin.ksp.compiler)
@@ -63,9 +58,5 @@ dependencies {
     implementation(libs.bundles.retrofit)
 
     testImplementation(libs.bundles.test)
-
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.bundles.androidTest)
-
-    debugImplementation(libs.bundles.composeDebug)
 }

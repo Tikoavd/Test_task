@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.TestTask" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.TestTask" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#FF2196F3</item>
+        <item name="colorPrimaryVariant">#FF1565C0</item>
+        <item name="colorPrimaryContainer">#FFBBF6C0</item>
+        <item name="colorOnPrimary">#FFFFFFFF</item>
+        <item name="colorSecondary">#FF8B8794</item>
+        <item name="colorOnSecondary">#FFFFFFFF</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>

@@ -1,12 +1,10 @@
 package com.task.feature.home.presentation.home.mvi
 
-import androidx.compose.runtime.Immutable
 import com.task.core.presentation.mvi.MviState
 import com.task.feature.home.presentation.models.CategoryUI
 import com.task.feature.home.presentation.models.ProductStatisticsUI
 import com.task.feature.home.presentation.models.ProductUI
 
-@Immutable
 data class HomeState(
     val isLoading: Boolean = true,
     val categories: List<CategoryUI> = emptyList(),

@@ -16,7 +16,7 @@ The project follows **Clean Architecture** with an **MVI (Model-View-Intent)** p
 │  ┌──────────────┐  ┌─────────────────┐ │
 │  │ Presentation │  │    Domain       │ │
 │  │  (MVI / VM) │  │ (UseCases,      │ │
-│  │  Compose UI │  │  Models, Repo   │ │
+│  │  XML / Frag │  │  Models, Repo   │ │
 │  └──────┬───────┘  │  interface)    │ │
 │         │          └────────┬────────┘ │
 │         │                   │          │
@@ -27,8 +27,7 @@ The project follows **Clean Architecture** with an **MVI (Model-View-Intent)** p
 │         └──────────┴─────────────────┘ │
 ├────────────────────────────────────────┤
 │     :core:domain  :core:data           │
-│     :core:presentation  :navigation    │
-│     :screens                           │
+│     :core:presentation                 │
 └────────────────────────────────────────┘
 ```
 
@@ -36,7 +35,7 @@ The project follows **Clean Architecture** with an **MVI (Model-View-Intent)** p
 
 | Layer | Module | Responsibility |
 |---|---|---|
-| **Presentation** | `feature/home` | Compose UI, ViewModel, MVI state/intent/effect/reducer |
+| **Presentation** | `feature/home` | XML / Fragment UI, ViewBinding, ViewModel, MVI state/intent/effect/reducer |
 | **Domain** | `feature/home`, `core/domain` | Use cases, domain models, repository interface, dispatcher abstraction |
 | **Data** | `feature/home`, `core/data` | Retrofit API, DTOs, repository implementation with in-memory cache |
 
@@ -50,20 +49,22 @@ testtask/
 ├── core/
 │   ├── data/               # Retrofit factory, OkHttp client, base network setup
 │   ├── domain/             # DispatchersProvider, Flow utilities, primitive defaults
-│   └── presentation/       # MviBaseViewModel, base state/intent/action/effect types
-├── feature/
-│   └── home/               # All product-catalog feature code
-│       ├── data/
-│       │   ├── api/        # ProductsApi (Retrofit interface)
-│       │   ├── models/     # ProductDto, CategoryDto (with toDomain() mappers)
-│       │   └── repository/ # HomeRepositoryImpl (caching via Mutex)
-│       └── domain/
-│           ├── models/     # Product, Category, ProductStatistics
-│           ├── repository/ # HomeRepository interface
-│           └── usecase/    # GetAllProductsUseCase, GetProductsUseCase,
-│                           # GetCategoriesUseCase
-├── navigation/             # NavHost, navigation graph
-└── screens/                # Serializable screen destination definitions
+│   └── presentation/       # MviBaseViewModel, MviFragment base, state/intent/action/effect types
+└── feature/
+    └── home/               # All product-catalog feature code
+        ├── data/
+        │   ├── api/        # ProductsApi (Retrofit interface)
+        │   ├── models/     # ProductDto, CategoryDto (with toDomain() mappers)
+        │   └── repository/ # HomeRepositoryImpl (caching via Mutex)
+        ├── domain/
+        │   ├── models/     # Product, Category
+        │   ├── repository/ # HomeRepository interface
+        │   └── usecase/    # GetAllProductsUseCase, GetProductsUseCase, GetCategoriesUseCase
+        └── presentation/
+            ├── home/       # HomeFragment, HomeViewModel, StatsBottomSheetFragment
+            │   ├── adapter/# ProductsAdapter (ListAdapter), CategoriesPagerAdapter
+            │   └── mvi/    # HomeState, HomeIntent, HomeAction, HomeEffect, HomeReducer
+            └── models/     # ProductUI, CategoryUI, ProductStatisticsUI (with toUI() mappers)
 ```
 
 ---
@@ -86,7 +87,7 @@ HomeViewModel                                                       │
                 ▼                                                   │
           HomeReducer (pure function)                               │
                 │                                                   │
-                ├──► new HomeState ──► UI recomposes                │
+                ├──► new HomeState ──► UI renders                   │
                 └──► HomeEffect (one-shot: errors, toasts) ─────────┘
 ```
 
@@ -122,13 +123,13 @@ Key properties of this MVI implementation:
 | Concern | Library |
 |---|---|
 | Language | Kotlin 2.3 |
-| UI | Jetpack Compose + Material 3 |
-| Navigation | Navigation Compose |
+| UI | XML Layouts + ViewBinding + Material 3 |
+| Navigation | Navigation Component (Fragment) |
 | Architecture | MVI + Clean Architecture |
 | DI | Koin 4.2 with KSP annotations |
 | Networking | Retrofit 3 + OkHttp |
 | Serialization | kotlinx.serialization |
-| Image loading | Coil 2 |
+| Image loading | Glide 4 |
 | Async | Kotlin Coroutines + Flow |
 | Testing | JUnit 4, MockK, kotlinx-coroutines-test |
 
@@ -146,6 +147,7 @@ Test coverage includes:
 - **`GetAllProductsUseCaseTest`** — verifies the use case delegates to the repository and passes through results unchanged.
 - **`GetCategoriesUseCaseTest`** — verifies delegation and pass-through for categories.
 - **`GetProductsUseCaseTest`** — verifies filtering by title (case-insensitive), filtering by category ID, combined filter, and empty/non-matching results.
+- **`HomeViewModelTest`** — verifies statistics computation in `LoadStatistics` intent handling: category item counts, top-3 character frequency, case folding, exclusion of non-letter characters, descending sort, and empty-input edge case.
 
 ---
 

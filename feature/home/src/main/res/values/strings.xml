@@ -3,5 +3,9 @@
     <string name="search">Search</string>
     <string name="items_title">Items per category</string>
     <string name="characters_title">Top 3 characters in all titles</string>
-    <string name="item_count_format">%d items</string>
+    <string name="item_count_format">%s: %d items</string>
+    <string name="show_statistics">Show statistics</string>
+    <string name="product_image">Product image</string>
+    <string name="category_image">Category image</string>
+    <string name="no_data">No data</string>
 </resources>

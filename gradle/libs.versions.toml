@@ -15,9 +15,15 @@ mockk-version = "1.14.9"
 
 lifecycleRuntimeKtx = "2.10.0"
 
-activityCompose = "1.13.0"
-
-composeBom = "2026.03.01"
+# UI
+activity-version = "1.13.0"
+fragment-version = "1.8.8"
+appcompat-version = "1.7.0"
+constraintlayout-version = "2.2.1"
+coordinatorlayout-version = "1.3.0"
+viewpager2-version = "1.1.0"
+recyclerview-version = "1.4.0"
+material-version = "1.13.0"
 
 navigation-version = "2.9.7"
 
@@ -25,7 +31,6 @@ navigation-version = "2.9.7"
 koin-version = "4.2.1"
 koin-annotations-version = "2.3.1"
 koin-ksp-version = "2.3.1"
-koin-androidx-compose-version = "4.2.1"
 
 # Kotlin serialisation
 kotlin-serialization-version = "1.11.0"
@@ -35,14 +40,23 @@ retrofit-version = "3.0.0"
 logger-version = "5.3.2"
 kotlin-converter-version = "1.0.0"
 
-#Coil
-coil-compose-version = "2.7.0"
-material-version = "1.13.0"
-material-icon = "1.7.8"
+#Glide
+glide-version = "4.16.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-version" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment-version" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat-version" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout-version" }
+coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version.ref = "coordinatorlayout-version" }
+viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2-version" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview-version" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material-version" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-version" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-version" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide-version" }
 
 #Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -51,51 +65,37 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 koin-test = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin-version" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk-version" }
 
-#Activity
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-
-#Compose
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-
-#Compose debug
-androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-
-#Navigation
-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-version" }
-
 # Retrofit
 retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit-version" }
 logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logger-version" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-version" }
 kotlin-serialization-convertor = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter-version" }
 
-#Coil
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose-version" }
-compose-material-icon = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icon" }
-
 # Koin
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-version" }
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations-version" }
-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin-androidx-compose-version" }
 koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin-ksp-version" }
 
 #Coroutines
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines-version" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines-version" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-version" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material-version" }
 
 [bundles]
 androidx = [
     "androidx-core-ktx",
-    "androidx-lifecycle-runtime-ktx"
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-activity",
+    "androidx-fragment"
+]
+
+ui = [
+    "appcompat",
+    "constraintlayout",
+    "coordinatorlayout",
+    "recyclerview",
+    "viewpager2",
+    "material"
 ]
 
 coroutines = [
@@ -103,21 +103,8 @@ coroutines = [
     "coroutines-android"
 ]
 
-compose = [
-    "androidx-compose-ui",
-    "androidx-compose-ui-graphics",
-    "androidx-compose-ui-tooling-preview",
-    "androidx-compose-material3",
-]
-
-composeDebug = [
-    "androidx-compose-ui-tooling",
-    "androidx-compose-ui-test-manifest",
-]
-
 koin = [
     "koin-android",
-    "koin-compose",
     "koin-annotations"
 ]
 
@@ -130,7 +117,6 @@ test = [
 
 androidTest = [
     "androidx-espresso-core",
-    "androidx-compose-ui-test-junit4",
     "androidx-junit",
 ]
 
@@ -144,8 +130,6 @@ retrofit = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-

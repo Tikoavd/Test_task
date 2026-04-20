@@ -1,12 +1,10 @@
 package com.task.feature.home.presentation.home.mvi
 
-import androidx.compose.runtime.Stable
 import com.task.core.presentation.mvi.MviAction
 import com.task.feature.home.presentation.models.CategoryUI
 import com.task.feature.home.presentation.models.ProductStatisticsUI
 import com.task.feature.home.presentation.models.ProductUI
 
-@Stable
 sealed interface HomeAction : MviAction {
 
     data class UpdateProducts(val products: List<ProductUI>) : HomeAction

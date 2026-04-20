@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -37,7 +36,7 @@ android {
         }
     }
     buildFeatures {
-        compose = true
+        viewBinding = true
     }
 }
 
@@ -45,18 +44,14 @@ dependencies {
     implementation(project(":core:domain"))
 
     implementation(libs.bundles.androidx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
+    implementation(libs.bundles.ui)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 
     implementation(libs.bundles.koin)
     ksp(libs.koin.ksp.compiler)
     implementation(libs.bundles.coroutines)
 
     testImplementation(libs.bundles.test)
-
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.bundles.androidTest)
-
-    debugImplementation(libs.bundles.composeDebug)
 }

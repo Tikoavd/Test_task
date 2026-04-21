@@ -3,6 +3,7 @@ package com.task.feature.home.presentation.home.screen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -95,7 +96,7 @@ private fun HomeScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             item {
                 CategoriesPager(
@@ -105,11 +106,19 @@ private fun HomeScreen(
                 )
             }
 
+            item {
+                Spacer(modifier = Modifier.height(4.dp))
+            }
+
             stickyHeader {
                 SearchBar(
                     query = state.query,
                     onQueryChange = { intentEmitter(HomeIntent.Search(it)) }
                 )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(12.dp))
             }
 
             items(state.products, key = { it.id }) { product ->

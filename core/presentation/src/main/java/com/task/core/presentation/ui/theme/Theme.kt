@@ -9,7 +9,8 @@ private val ColorScheme = lightColorScheme(
     primaryContainer = Green40,
     secondary = PurpleGrey40,
     tertiary = Pink40,
-    outline = Grey40
+    outline = Grey40,
+    onPrimaryFixedVariant = Grey80
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

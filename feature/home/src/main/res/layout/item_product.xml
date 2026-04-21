@@ -39,9 +39,11 @@
             android:textColor="?attr/colorOnSurface"
             android:textSize="15sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvSubtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProduct"
-            app:layout_constraintTop_toTopOf="@id/ivProduct" />
+            app:layout_constraintTop_toTopOf="@id/ivProduct"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/tvSubtitle"
@@ -53,6 +55,7 @@
             android:maxLines="1"
             android:textColor="@color/dark_grey"
             android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProduct"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />

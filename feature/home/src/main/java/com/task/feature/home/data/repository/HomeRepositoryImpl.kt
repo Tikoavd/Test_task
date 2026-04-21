@@ -16,15 +16,15 @@ class HomeRepositoryImpl(
 ) : HomeRepository {
 
     private val cacheMutex = Mutex()
-    private var cacheProducts: List<Product> = emptyList()
+    private var cacheProducts: List<Product>? = null
 
     override fun getProducts(): Flow<List<Product>> = emitFlow {
-        if (cacheProducts.isEmpty()) {
-            cacheMutex.withLock {
+        cacheMutex.withLock {
+            if (cacheProducts == null) {
                 cacheProducts = productsApi.getProducts().map { it.toDomain() }
             }
+            cacheProducts.orEmpty()
         }
-        cacheMutex.withLock { cacheProducts }
     }
 
     override fun getCategories(): Flow<List<Category>> = emitFlow {

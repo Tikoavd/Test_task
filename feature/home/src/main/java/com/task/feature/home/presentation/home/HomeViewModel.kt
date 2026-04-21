@@ -44,11 +44,10 @@ class HomeViewModel(
         }.launchIn(viewModelScope)
 
         combine(
-            viewState.map { it.query }.distinctUntilChanged(),
+            viewState.map { it.query }.distinctUntilChanged().debounce(300),
             viewState.map { it.categoryId }.distinctUntilChanged()
         ) { query, categoryId -> query to categoryId }
             .filter { (_, categoryId) -> categoryId > 0 }
-            .debounce(300)
             .flatMapLatest { (query, categoryId) ->
                 getProductsUseCase(query, categoryId)
                     .map { products -> onAction(HomeAction.UpdateProducts(products.map { it.toUI() })) }
@@ -65,29 +64,33 @@ class HomeViewModel(
 
             is HomeIntent.LoadStatistics -> {
                 onAction(HomeAction.ShowBottomSheetLoading)
-                getAllProductsUseCase()
-                    .map { products ->
-                        val categoryItemCounts = products
-                            .groupBy { it.category.name }
-                            .map { (name, items) -> CategoryStatUI(name, items.size) }
-
-                        val topCharacters = products
-                            .flatMap { it.title.toList() }
-                            .filter { it.isLetter() }
-                            .map { it.lowercaseChar() }
-                            .groupingBy { it }
-                            .eachCount()
-                            .entries
-                            .sortedByDescending { it.value }
-                            .take(3)
-                            .map { CharStatUI(it.key, it.value) }
-
-                        ProductStatisticsUI(categoryItemCounts, topCharacters)
-                    }
-                    .onEach { statsUI -> onAction(HomeAction.UpdateStatistics(statsUI)) }
-                    .catch { e -> sendEffect(HomeEffect.ShowError(e.message.orEmpty())) }
-                    .launchIn(viewModelScope)
+                getProductStatistics()
             }
         }
+    }
+
+    private fun getProductStatistics() {
+        getAllProductsUseCase()
+            .map { products ->
+                val categoryItemCounts = products
+                    .groupBy { it.category.name }
+                    .map { (name, items) -> CategoryStatUI(name, items.size) }
+
+                val topCharacters = products
+                    .flatMap { it.title.toList() }
+                    .filter { it.isLetter() }
+                    .map { it.lowercaseChar() }
+                    .groupingBy { it }
+                    .eachCount()
+                    .entries
+                    .sortedByDescending { it.value }
+                    .take(3)
+                    .map { CharStatUI(it.key, it.value) }
+
+                ProductStatisticsUI(categoryItemCounts, topCharacters)
+            }
+            .onEach { statsUI -> onAction(HomeAction.UpdateStatistics(statsUI)) }
+            .catch { e -> sendEffect(HomeEffect.ShowError(e.message.orEmpty())) }
+            .launchIn(viewModelScope)
     }
 }

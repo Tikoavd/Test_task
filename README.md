@@ -61,7 +61,7 @@ testtask/
 │           ├── models/     # Product, Category, ProductStatistics
 │           ├── repository/ # HomeRepository interface
 │           └── usecase/    # GetAllProductsUseCase, GetProductsUseCase,
-│                           # GetCategoriesUseCase, GetProductStatisticsUseCase
+│                           # GetCategoriesUseCase
 ├── navigation/             # NavHost, navigation graph
 └── screens/                # Serializable screen destination definitions
 ```
@@ -104,7 +104,6 @@ Key properties of this MVI implementation:
 | `GetAllProductsUseCase` | — | `Flow<List<Product>>` | All products, no filtering |
 | `GetProductsUseCase` | `query: String`, `categoryId: Int` | `Flow<List<Product>>` | Products filtered by title (case-insensitive contains) and category |
 | `GetCategoriesUseCase` | — | `Flow<List<Category>>` | All categories |
-| `GetProductStatisticsUseCase` | — | `Flow<ProductStatistics>` | Item count per category + top 3 most frequent letters across all product titles |
 
 ---
 
@@ -147,7 +146,6 @@ Test coverage includes:
 - **`GetAllProductsUseCaseTest`** — verifies the use case delegates to the repository and passes through results unchanged.
 - **`GetCategoriesUseCaseTest`** — verifies delegation and pass-through for categories.
 - **`GetProductsUseCaseTest`** — verifies filtering by title (case-insensitive), filtering by category ID, combined filter, and empty/non-matching results.
-- **`GetProductStatisticsUseCaseTest`** — verifies category item counts, top-3 character frequency computation, case folding, exclusion of non-letter characters, and empty-input edge case.
 
 ---
 

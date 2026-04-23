@@ -40,6 +40,7 @@ class HomeViewModel(
         getCategoriesUseCase().onEach { categories ->
             onAction(HomeAction.UpdateCategories(categories.map { it.toUI() }))
         }.catch { e ->
+            onAction(HomeAction.SetProductsLoadingFailed)
             sendEffect(HomeEffect.ShowError(e.message.orEmpty()))
         }.launchIn(viewModelScope)
 
@@ -47,11 +48,14 @@ class HomeViewModel(
             viewState.map { it.query }.distinctUntilChanged().debounce(300),
             viewState.map { it.categoryId }.distinctUntilChanged()
         ) { query, categoryId -> query to categoryId }
-            .filter { (_, categoryId) -> categoryId > 0 }
+            .filter { (_, categoryId) -> categoryId != null }
             .flatMapLatest { (query, categoryId) ->
-                getProductsUseCase(query, categoryId)
+                getProductsUseCase(query, categoryId!!)
                     .map { products -> onAction(HomeAction.UpdateProducts(products.map { it.toUI() })) }
-                    .catch { e -> sendEffect(HomeEffect.ShowError(e.message.orEmpty())) }
+                    .catch { e ->
+                        onAction(HomeAction.SetProductsLoadingFailed)
+                        sendEffect(HomeEffect.ShowError(e.message.orEmpty()))
+                    }
             }
             .launchIn(viewModelScope)
     }
@@ -63,6 +67,7 @@ class HomeViewModel(
             is HomeIntent.OnCategoryChange -> onAction(HomeAction.ChangeCategoryId(intent.categoryId))
 
             is HomeIntent.LoadStatistics -> {
+                if (viewState.value.statistics != null) return
                 onAction(HomeAction.ShowBottomSheetLoading)
                 getProductStatistics()
             }
@@ -90,7 +95,10 @@ class HomeViewModel(
                 ProductStatisticsUI(categoryItemCounts, topCharacters)
             }
             .onEach { statsUI -> onAction(HomeAction.UpdateStatistics(statsUI)) }
-            .catch { e -> sendEffect(HomeEffect.ShowError(e.message.orEmpty())) }
+            .catch { e ->
+                onAction(HomeAction.SetStatisticsLoadingFailed)
+                sendEffect(HomeEffect.ShowError(e.message.orEmpty()))
+            }
             .launchIn(viewModelScope)
     }
 }

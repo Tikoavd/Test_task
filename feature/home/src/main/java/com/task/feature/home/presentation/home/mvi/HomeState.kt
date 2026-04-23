@@ -8,7 +8,7 @@ import com.task.feature.home.presentation.models.ProductUI
 data class HomeState(
     val isLoading: Boolean = true,
     val categories: List<CategoryUI> = emptyList(),
-    val categoryId: Int = 0,
+    val categoryId: Int? = null,
     val products: List<ProductUI> = emptyList(),
     val query: String = "",
     val isBottomSheetLoading: Boolean = false,

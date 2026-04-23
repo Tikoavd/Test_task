@@ -13,4 +13,6 @@ sealed interface HomeAction : MviAction {
     data object ShowBottomSheetLoading : HomeAction
     data class ChangeCategoryId(val categoryId: Int) : HomeAction
     data class UpdateStatistics(val statistics: ProductStatisticsUI) : HomeAction
+    data object SetProductsLoadingFailed : HomeAction
+    data object SetStatisticsLoadingFailed : HomeAction
 }

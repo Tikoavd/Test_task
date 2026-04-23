@@ -1,6 +1,5 @@
 package com.task.feature.home.presentation.home.mvi
 
-import com.task.core.domain.utils.orDefault
 import com.task.core.presentation.mvi.Reducer
 import org.koin.core.annotation.Single
 
@@ -11,7 +10,7 @@ class HomeReducer : Reducer<HomeAction, HomeState> {
         when (action) {
             is HomeAction.UpdateCategories -> state.copy(
                 categories = action.categories,
-                categoryId = action.categories.firstOrNull()?.id.orDefault()
+                categoryId = action.categories.firstOrNull()?.id
             )
 
             is HomeAction.UpdateProducts -> state.copy(
@@ -34,5 +33,9 @@ class HomeReducer : Reducer<HomeAction, HomeState> {
                 statistics = action.statistics,
                 isBottomSheetLoading = false
             )
+
+            is HomeAction.SetProductsLoadingFailed -> state.copy(isLoading = false)
+
+            is HomeAction.SetStatisticsLoadingFailed -> state.copy(isBottomSheetLoading = false)
         }
 }

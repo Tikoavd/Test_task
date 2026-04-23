@@ -101,7 +101,7 @@ private fun HomeScreen(
             item {
                 CategoriesPager(
                     categories = state.categories,
-                    categoryId = state.categoryId,
+                    categoryId = state.categoryId ?: 0,
                     onCategoryChange = { intentEmitter(HomeIntent.OnCategoryChange(it)) }
                 )
             }

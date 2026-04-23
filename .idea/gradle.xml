@@ -17,8 +17,6 @@
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/home" />
-            <option value="$PROJECT_DIR$/navigation" />
-            <option value="$PROJECT_DIR$/screens" />
           </set>
         </option>
       </GradleProjectSettings>
